@@ -106,7 +106,8 @@ Plate_Size = 2;									// [0:Standard - 4.5 inch / 114.3 mm height, 1:Junior-Ju
 // Set smoothness of curves and holes.
 Cylinder_Quality = 64;							// [16:128]
 
-
+// Make studs or not?
+Make_Studs_Check = 1;								// [0:1]
 
 
 
@@ -329,7 +330,7 @@ rotate([0, 0, -90])
 
 				union()
 				{
-						//Make_Studs();
+				if (Make_Studs_Check==1){  Make_Studs();}
                     for (plateIndex = [0:Plate_Width - 1])
 					{
 						PlateDoSolids(plateIndex);
@@ -943,8 +944,7 @@ module SolidKeystone()
 module Make_Studs()
 {
 $fn=25;
-
-//halfwidth = ceil(solid_Plate_Width/12.8/2);//kEdgeWidth
+//halfwidth = ceil(solid_Plate_Width/12.8/2);
 halfwidth = ceil(kEdgeWidth/12.8/2);//kEdgeWidth
 halfheight = 1+ceil(height_sizes[Plate_Size]/12.8/2);
 //echo("Width ="+halfwidth+" Height = "+halfheight);
@@ -952,12 +952,16 @@ echo(halfwidth);
 echo(halfheight);
 echo(solid_Plate_Width);
 echo(kEdgeWidth);
-translate([3.9,3.9]) //3.9?
-    for ( j = [-(halfheight+1):halfheight] ) {
-        for ( i = [-(halfwidth+1):halfwidth] ) {
+	rotate([0, 0, 90])
+	{
+
+translate([0,0,5]) //3.9?
+    for ( j = [-2*halfheight:0] ) {
+        for ( i = [0:2*halfwidth] ) {
             translate([i*8,j*8,0]){//8mm spacing
                 cylinder(h=1.80,r=2.42); //stud dimensions
             }
         }
     }
+}
 }
