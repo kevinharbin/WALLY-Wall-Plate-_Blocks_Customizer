@@ -1,6 +1,7 @@
 # WALLY Wall Plate Customizer - Mercury Thirteen Fork v1.7.2.studs.a
 
 This is a WIP fork to add Lego style studs to the faceplate. studs code adapted from https://www.openscad.info/index.php/2020/06/20/toy-brick-model/
+
 This is a fork of Joshua Austill's WALLY Wall Plate Customizer (https://github.com/jlaustill/WALLY-Wall-Plate-Customizer) which itself was forked from the awesome original by TheNewHobbyist (https://www.thingiverse.com/thing:47956 / https://github.com/thenewhobbyist/OpenSCAD).
 
 
