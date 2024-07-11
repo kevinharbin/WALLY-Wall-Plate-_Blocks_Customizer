@@ -10,6 +10,9 @@
 
 
 	Change Log:
+    
+    v1.7.2.studs.a - 2024-jul 11
+	Adding studs for Lego type blocks.
 
 	v1.7.2 - Mercury0x0d - 2/19/2023 - Developed in OpenSCAD 2021.01
 	Fixed:
@@ -98,7 +101,7 @@
 Plate_Width = 1;								// [1:5]
 
 // Overall plate size
-Plate_Size = 0;									// [0:Standard - 4.5 inch / 114.3 mm height, 1:Junior-Jumbo - 4.875 inch / 123.825 mm height, 2:Jumbo - 5.25 inch / 133.35 mm height]
+Plate_Size = 2;									// [0:Standard - 4.5 inch / 114.3 mm height, 1:Junior-Jumbo - 4.875 inch / 123.825 mm height, 2:Jumbo - 5.25 inch / 133.35 mm height]
 
 // Set smoothness of curves and holes.
 Cylinder_Quality = 64;							// [16:128]
@@ -326,7 +329,8 @@ rotate([0, 0, -90])
 
 				union()
 				{
-					for (plateIndex = [0:Plate_Width - 1])
+						//Make_Studs();
+                    for (plateIndex = [0:Plate_Width - 1])
 					{
 						PlateDoSolids(plateIndex);
 					}
@@ -791,7 +795,8 @@ module PlateDoScrews(plateIndex)
 
 module PlateDoSolids(plateIndex)
 {
-	selections = len(gPlateRows[plateIndex]);
+
+    selections = len(gPlateRows[plateIndex]);
 
 	if (gPlates[plateIndex] != "none")
 	{
@@ -933,4 +938,26 @@ module SolidKeystone()
 			}
 		}
 	}
+}
+
+module Make_Studs()
+{
+$fn=25;
+
+//halfwidth = ceil(solid_Plate_Width/12.8/2);//kEdgeWidth
+halfwidth = ceil(kEdgeWidth/12.8/2);//kEdgeWidth
+halfheight = 1+ceil(height_sizes[Plate_Size]/12.8/2);
+//echo("Width ="+halfwidth+" Height = "+halfheight);
+echo(halfwidth);
+echo(halfheight);
+echo(solid_Plate_Width);
+echo(kEdgeWidth);
+translate([3.9,3.9]) //3.9?
+    for ( j = [-(halfheight+1):halfheight] ) {
+        for ( i = [-(halfwidth+1):halfwidth] ) {
+            translate([i*8,j*8,0]){//8mm spacing
+                cylinder(h=1.80,r=2.42); //stud dimensions
+            }
+        }
+    }
 }
